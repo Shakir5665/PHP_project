@@ -3,82 +3,8 @@
 
 This guide is designed for beginners. It provides a complete, step-by-step walkthrough to set up, understand, and run the **Department Communication Management System** on a local computer using **HTML, CSS, PHP, and XAMPP (Apache + MySQL)**.
 
----
 
-## 📑 Table of Contents
-1. [Project Overview & Learning Objectives](#1-project-overview--learning-objectives)
-2. [Application Architecture](#2-application-architecture)
-3. [File Structure & Code Explanation](#3-file-structure--code-explanation)
-4. [Database Design & Schema Overview](#4-database-design--schema-overview)
-5. [Prerequisites & Tools Installation](#5-prerequisites--tools-installation)
-6. [Step-by-Step Setup Guide](#6-step-by-step-setup-guide)
-7. [Testing the Application Features](#7-testing-the-application-features)
-8. [Troubleshooting & FAQs](#8-troubleshooting--faqs)
-
----
-
-## 1. Project Overview & Learning Objectives
-
-The **Department Communication Management System** is a lightweight web application designed for university departments to organize meetings, agendas, meeting decisions, and attendance tracking.
-
-### Primary Learning Objectives:
-- **Database System Design**: Implement real-world relational database concepts, including:
-  - Specialization / Generalization hierarchies (`User` $\rightarrow$ `Permanent_lecturer` / `Temporary_lecturer` / `Student_representative`).
-  - Strict Foreign Key integrity constraints (`ON UPDATE CASCADE ON DELETE RESTRICT`).
-  - Table `CHECK` constraints (e.g. valid date ranges, status validation).
-  - Composite primary keys (e.g. `(MeetingId, decision)` and `(UserId, MeetingId)`).
-  - 1-to-1 relationships enforced via `UNIQUE` constraints (e.g. `MeetingId` in `Agenda`).
-- **PHP Data Objects (PDO)**: Securely connect to MySQL using prepared statements to prevent SQL Injection attacks.
-- **Web UI & Responsive Design**: Build a clean user interface using semantic HTML5 and vanilla CSS3 without heavy external dependencies.
-
----
-
-## 2. Application Architecture
-
-The system uses a classic **3-Tier Web Application Architecture**:
-
-```mermaid
-graph TD
-    subgraph Presentation_Tier ["1. Presentation Tier (Client)"]
-        Browser["Web Browser (Chrome, Edge, Firefox)"]
-        UI["HTML5 UI + CSS3 (style.css)"]
-    end
-
-    subgraph Logic_Tier ["2. Application Logic Tier (XAMPP Apache Server)"]
-        Apache["Apache Web Server (Port 80 / 8000)"]
-        Router["index.php (Router & Controller)"]
-        Config["config.php (PDO Connection Provider)"]
-        PDO["PHP PDO Driver (Prepared Statements)"]
-    end
-
-    subgraph Data_Tier ["3. Database Tier (XAMPP MySQL Server)"]
-        MySQL["MySQL Database Server (Port 3306)"]
-        DB[("Your_DB_Name")]
-        Tables["10 Relational Tables (InnoDB Engine)"]
-    end
-
-    Browser -->|HTTP GET / POST Request| Apache
-    Apache --> Router
-    Router --> Config
-    Config --> PDO
-    PDO -->|TCP / Port 3306| MySQL
-    MySQL --> DB
-    DB --> Tables
-    Tables -->|Result Sets / Row Arrays| PDO
-    PDO --> Router
-    Router -->|Rendered HTML Response| Browser
-```
-
-### How the Request-Response Cycle Works:
-1. **User Action**: The user clicks a menu link (e.g. `index.php?page=meetings`) or submits a form (e.g. adding a meeting).
-2. **Routing (`index.php`)**: PHP reads the `$_GET['page']` parameter to decide which section of the page to render.
-3. **Form Processing**: If an HTTP `POST` request is received, PHP extracts the form inputs, prepares an SQL query with placeholders (`?`), and securely executes it against MySQL.
-4. **Data Retrieval**: PHP executes SQL `SELECT` queries using PDO and fetches data into associative arrays.
-5. **Presentation**: The fetched data is safely formatted with `htmlspecialchars()` and injected into HTML tables and cards, which are styled by `style.css`.
-
----
-
-## 3. File Structure & Code Explanation
+## 1. File Structure & Code Explanation
 
 The project has a clean and minimal structure:
 
@@ -125,7 +51,7 @@ Contains the entire web application interface and logic:
 ---
 
 
-## 5. Prerequisites & Tools Installation
+## 2. Prerequisites & Tools Installation
 
 You only need **one tool** installed on your Windows computer: **XAMPP**.
 
@@ -139,7 +65,7 @@ You only need **one tool** installed on your Windows computer: **XAMPP**.
 
 ---
 
-## 6. Step-by-Step Setup Guide
+## 3. Step-by-Step Setup Guide
 
 Follow these 5 simple steps to get the project running:
 
